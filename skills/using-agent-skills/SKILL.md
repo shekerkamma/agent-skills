@@ -178,3 +178,72 @@ Not every task needs every skill. A bug fix might only need: `debugging-and-erro
 | Ship | ci-cd-and-automation | Automated quality gates on every change |
 | Ship | documentation-and-adrs | Document the why, not just the what |
 | Ship | shipping-and-launch | Pre-launch checklist, monitoring, rollback plan |
+
+## Common Rationalizations
+
+| Rationalization | Reality |
+|---|---|
+| "This task is too simple to need a skill" | Simple tasks are where shortcuts accumulate. The skill takes seconds to check; rework takes hours. |
+| "I'll skip to the skill I already know" | The discovery flowchart exists because the right skill isn't always obvious. Check it. |
+| "I'll just start coding and see what happens" | Unplanned coding produces unplanned results. Check for an applicable skill first. |
+| "The user told me what to do, I don't need to surface assumptions" | Users describe solutions, not problems. Surface your assumptions before acting on them. |
+
+## Red Flags
+
+- Starting implementation before checking whether a skill applies
+- Treating skills as optional suggestions rather than required workflows
+- Running a downstream skill (e.g., `incremental-implementation`) without the expected upstream artifact (e.g., `tasks/todo.md`)
+- Silently filling in ambiguous requirements instead of surfacing them
+- Marking a task complete without a verification step
+
+## Verification
+
+- [ ] A skill was identified and invoked before implementation began
+- [ ] All upstream prerequisites for the chosen skill are satisfied
+- [ ] Assumptions were surfaced before any plan, spec, or code was written
+- [ ] The full skill workflow was followed — no steps skipped
+- [ ] Verification step within the invoked skill was completed before reporting done
+
+## Skill Relationships
+
+### Category
+Infrastructure Ops
+
+### Lifecycle Position
+Meta — orchestrator skill. Entry point for the entire lifecycle; governs skill discovery and sequencing.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+None — can be invoked standalone.
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `all skills` | Orchestrator | always — this skill governs which other skill is invoked | user intent → skill selection |
+| `interview-me` | Sequential downstream | when user intent is underspecified | — |
+| `spec-driven-development` | Sequential downstream | for any non-trivial build task without a spec | — |
+
+### Runtime Preamble
+Skill discovery and lifecycle orchestration. This is the entry point — it maps intent to the right skill and defines the 13-step full lifecycle sequence.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

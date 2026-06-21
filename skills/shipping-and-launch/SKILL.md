@@ -307,3 +307,49 @@ After deploying:
 - [ ] Critical user flow works
 - [ ] Logs are flowing
 - [ ] Rollback tested or verified ready
+
+## Skill Relationships
+
+### Category
+CI/CD & Deployment
+
+### Lifecycle Position
+Step 13 of 13 — Ship phase. Final skill in the full lifecycle.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`git-workflow-and-versioning` `ci-cd-and-automation` `security-and-hardening` `browser-testing-with-devtools`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `git-workflow-and-versioning` | Sequential upstream | always — clean branch and history required before deploy | clean branch |
+| `ci-cd-and-automation` | Sequential upstream | always — CI must be green before deploy proceeds | passing CI run |
+| `security-and-hardening` | Prerequisite / Gate | security review must be complete before production deploy | — |
+| `browser-testing-with-devtools` | Prerequisite / Gate | browser tests must pass for any UI-facing deploy | — |
+| `documentation-and-adrs` | Sequential downstream | document what shipped and why immediately after launch | docs/decisions/*.md |
+
+### Runtime Preamble
+Final production launch checklist. Prerequisites: git-workflow-and-versioning (clean branch), ci-cd-and-automation (green CI), security-and-hardening (security review). After launch, run documentation-and-adrs.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

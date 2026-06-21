@@ -381,3 +381,48 @@ After completing any implementation:
 - [ ] Coverage hasn't decreased (if tracked)
 
 **Note:** Run each test command after a change that could affect the result. After a clean run, don't repeat the same command unless the code has changed since — re-running on unchanged code adds no confidence.
+
+## Skill Relationships
+
+### Category
+Product Verification
+
+### Lifecycle Position
+Step 9 of 13 — Verify phase. Runs after each incremental-implementation slice; proves behavior before review.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`incremental-implementation`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `incremental-implementation` | Sequential upstream | always — tests are written before or alongside each implementation slice | implementation code |
+| `code-review-and-quality` | Sequential downstream | always — tests must pass before code review | passing test suite |
+| `debugging-and-error-recovery` | Fallback | when tests reveal an unexpected failure | failing test output |
+| `browser-testing-with-devtools` | Peer | use browser-testing-with-devtools for runtime DOM/network verification that unit tests cannot cover | — |
+
+### Runtime Preamble
+Writing tests before code. Pairs with incremental-implementation (run per slice). If tests fail unexpectedly, route to debugging-and-error-recovery. Passing tests feed code-review-and-quality.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

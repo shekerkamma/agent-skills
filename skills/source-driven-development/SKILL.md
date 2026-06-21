@@ -1,6 +1,9 @@
 ---
 name: source-driven-development
 description: Grounds every implementation decision in official documentation. Use when you want authoritative, source-cited code free from outdated patterns. Use when building with any framework or library where correctness matters.
+permissions:
+  network:
+    - https://
 ---
 
 # Source-Driven Development
@@ -192,3 +195,48 @@ After implementing with source-driven development:
 - [ ] No deprecated APIs are used (checked against migration guides)
 - [ ] Conflicts between docs and existing code were surfaced to the user
 - [ ] Anything that could not be verified is explicitly flagged as unverified
+
+## Skill Relationships
+
+### Category
+Library / API Reference
+
+### Lifecycle Position
+Step 6 of 13 — Build phase. Behavioral overlay: verifies implementation decisions against official docs throughout the build phase.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+None — can be invoked standalone.
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `incremental-implementation` | Behavioral overlay | always when using a framework or library | verified code with source citations |
+| `api-and-interface-design` | Behavioral overlay | always — API decisions must be doc-verified | — |
+| `frontend-ui-engineering` | Behavioral overlay | always — component and framework patterns must be doc-verified | — |
+| `context-engineering` | Peer | pair together: context-engineering loads the workspace; source-driven-development verifies decisions against docs | — |
+
+### Runtime Preamble
+Grounding implementation in official docs. Pairs with incremental-implementation, api-and-interface-design, and frontend-ui-engineering — invoke those for the build loop.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

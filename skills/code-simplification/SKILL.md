@@ -329,3 +329,46 @@ After completing a simplification pass:
 - [ ] No error handling was removed or weakened
 - [ ] No dead code was left behind (unused imports, unreachable branches)
 - [ ] A teammate or review agent would approve the change as a net improvement
+
+## Skill Relationships
+
+### Category
+Code Quality & Review
+
+### Lifecycle Position
+Review phase — peer to code-review-and-quality; focus is clarity, not correctness.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+None — can be invoked standalone.
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `code-review-and-quality` | Peer | run before code review to reduce diff noise; or as a standalone refactor pass | simplified code |
+| `incremental-implementation` | Amplifier | optional post-pass to simplify the output of a completed implementation slice | simplified implementation |
+
+### Runtime Preamble
+Simplifying code for clarity. Run before or during code-review-and-quality to reduce diff noise, or as a standalone refactor pass.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

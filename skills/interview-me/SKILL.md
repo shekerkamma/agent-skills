@@ -223,3 +223,47 @@ After applying interview-me:
 - [ ] The user confirmed the restate with an explicit yes (not "whatever you think," not "sounds good," not silence)
 - [ ] At the stop point, the agent could predict reactions to the next three questions it would ask
 - [ ] Any handoff to a downstream skill (`idea-refine`, `spec-driven-development`) was framed in terms of the confirmed intent, not the original underspecified ask
+
+## Skill Relationships
+
+### Category
+Business Automation
+
+### Lifecycle Position
+Step 1 of 13 — Define phase. First skill in the full lifecycle.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`spec-driven-development`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `idea-refine` | Sequential downstream | if idea exists but is vague | captured intent in conversation |
+| `spec-driven-development` | Sequential downstream | if requirements are clear after interview | captured requirements in conversation |
+| `spec-driven-development` | Prerequisite / Gate | always — spec should not start without intent clarity | — |
+
+### Runtime Preamble
+Running interview-me to extract intent before any plan, spec, or code. After the interview, I'll route to idea-refine (vague idea) or spec-driven-development (clear requirements).
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

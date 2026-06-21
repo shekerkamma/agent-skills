@@ -388,3 +388,47 @@ After setting up or modifying CI:
 - [ ] Secrets are stored in the secrets manager, not in code
 - [ ] Deployment has a rollback mechanism
 - [ ] Pipeline runs in under 10 minutes for the test suite
+
+## Skill Relationships
+
+### Category
+CI/CD & Deployment
+
+### Lifecycle Position
+Ship phase — peer to git-workflow-and-versioning; automates quality gates for every commit.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`shipping-and-launch`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `git-workflow-and-versioning` | Peer | CI runs are triggered by git push; the two skills are tightly coupled | commits / PRs |
+| `shipping-and-launch` | Sequential upstream | CI must be green before a production deploy proceeds | passing CI run |
+| `test-driven-development` | Amplifier | CI enforces test-driven-development gates automatically on every push | — |
+
+### Runtime Preamble
+Automating quality gates. Tightly coupled with git-workflow-and-versioning (CI triggers on push). CI must be green before shipping-and-launch proceeds.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

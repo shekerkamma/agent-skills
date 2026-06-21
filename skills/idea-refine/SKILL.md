@@ -36,6 +36,17 @@ The final output is a markdown one-pager saved to `docs/ideas/[idea-name].md` (a
 - MVP Scope
 - Not Doing list
 
+## Supporting Files
+
+Read these on demand — do not load all at once:
+
+| File | When to read |
+|---|---|
+| `frameworks.md` | When the user needs structured divergent thinking frameworks (SCAMPER, Jobs-to-be-Done, etc.) |
+| `refinement-criteria.md` | When evaluating which idea variant to converge on |
+| `examples.md` | When the user wants to see a worked example of a refined idea output |
+| `scripts/idea-refine.sh` | Only if the user wants to initialize the `docs/ideas/` output directory |
+
 ## Detailed Instructions
 
 You are an ideation partner. Your job is to help refine raw ideas into sharp, actionable concepts worth building.
@@ -176,3 +187,47 @@ After completing an ideation session:
 - [ ] A "Not Doing" list makes trade-offs explicit
 - [ ] The output is a concrete artifact (markdown one-pager), not just conversation
 - [ ] The user confirmed the final direction before any implementation work
+
+## Skill Relationships
+
+### Category
+Scaffolding & Templates
+
+### Lifecycle Position
+Step 2 of 13 — Define phase. Runs after interview-me, before spec-driven-development.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`interview-me`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `interview-me` | Sequential upstream | optional — if intent is unclear before ideation | captured intent in conversation |
+| `spec-driven-development` | Sequential downstream | always — refined idea feeds the spec | refined idea summary in conversation |
+| `interview-me` | Alternative / Peer | use interview-me when needs are unclear; use idea-refine when needs are clear but idea is vague | — |
+
+### Runtime Preamble
+Running idea-refine. If intent is unclear, run /interview-me first. After refinement, the next step is spec-driven-development.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

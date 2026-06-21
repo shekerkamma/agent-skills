@@ -298,3 +298,48 @@ After fixing a bug:
 - [ ] All existing tests pass
 - [ ] Build succeeds
 - [ ] The original bug scenario is verified end-to-end
+
+## Skill Relationships
+
+### Category
+Runbook
+
+### Lifecycle Position
+Verify phase — fallback skill invoked when any build or verify step fails unexpectedly.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+None — can be invoked standalone.
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `test-driven-development` | Fallback | activated when tests fail unexpectedly | failing test output |
+| `incremental-implementation` | Fallback | activated when an implementation slice breaks the build | error output |
+| `test-driven-development` | Sequential downstream | always — write a regression test after identifying the root cause | reproduction test + fix |
+| `browser-testing-with-devtools` | Peer | use Chrome DevTools for browser-specific runtime debugging | console logs, network traces |
+
+### Runtime Preamble
+Systematic root-cause investigation. After the fix, write a regression test (test-driven-development) before marking done.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

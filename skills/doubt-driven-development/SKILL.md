@@ -241,3 +241,48 @@ After applying doubt-driven development:
 - [ ] In interactive mode, cross-model was **explicitly offered** to the user (regardless of artifact stakes) and the response was acknowledged in the output
 - [ ] In non-interactive mode, cross-model was skipped and the skip was announced
 - [ ] Any external CLI invocation was preceded by a PATH check, a working-binary test, syntax confirmation with the user, and explicit authorization to run
+
+## Skill Relationships
+
+### Category
+Code Quality & Review
+
+### Lifecycle Position
+Step 8 of 13 — Build phase. Behavioral overlay: adversarial review of any non-trivial in-flight decision.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+None — can be invoked standalone.
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `incremental-implementation` | Behavioral overlay | when stakes are high, code is unfamiliar, or a decision is non-trivial | — |
+| `spec-driven-development` | Behavioral overlay | when spec decisions are non-obvious | — |
+| `api-and-interface-design` | Behavioral overlay | when interface contracts are hard to reverse | — |
+| `code-review-and-quality` | Peer | doubt-driven-development reviews in-flight decisions; code-review-and-quality reviews completed code | — |
+
+### Runtime Preamble
+Running adversarial fresh-context review. Invoke alongside incremental-implementation, spec-driven-development, or api-and-interface-design when stakes are high.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

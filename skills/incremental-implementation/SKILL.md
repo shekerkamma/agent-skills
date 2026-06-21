@@ -243,3 +243,51 @@ After completing all increments for a task:
 - [ ] The build is clean
 - [ ] The feature works end-to-end as specified
 - [ ] No uncommitted changes remain
+
+## Skill Relationships
+
+### Category
+Business Automation
+
+### Lifecycle Position
+Step 7 of 13 — Build phase. Core build skill; orchestrates test-driven-development per slice.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`planning-and-task-breakdown`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `planning-and-task-breakdown` | Sequential upstream | always — requires a task breakdown before building | tasks/todo.md |
+| `test-driven-development` | Sequential downstream | always — each slice must be tested before expanding | implementation code per slice |
+| `context-engineering` | Behavioral overlay | recommended — load context before each session | — |
+| `source-driven-development` | Behavioral overlay | recommended — verify framework usage against official docs | — |
+| `doubt-driven-development` | Behavioral overlay | when stakes are high or code is unfamiliar | — |
+| `api-and-interface-design` | Peer | invoke api-and-interface-design when the slice involves a new API or interface boundary | — |
+| `frontend-ui-engineering` | Peer | invoke frontend-ui-engineering when the slice involves UI components | — |
+
+### Runtime Preamble
+Building in slices. Prerequisites: planning-and-task-breakdown (tasks/todo.md), context-engineering (recommended). Each slice feeds test-driven-development before expanding.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

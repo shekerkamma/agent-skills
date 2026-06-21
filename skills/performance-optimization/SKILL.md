@@ -348,3 +348,47 @@ After any performance-related change:
 - [ ] No N+1 queries in new data fetching code
 - [ ] Performance budget passes in CI (if configured)
 - [ ] Existing tests still pass (optimization didn't break behavior)
+
+## Skill Relationships
+
+### Category
+Product Verification
+
+### Lifecycle Position
+Review phase — complement to code-review-and-quality when performance regressions are suspected.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`code-review-and-quality` `shipping-and-launch`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `code-review-and-quality` | Sequential upstream | invoked by code-review-and-quality when performance concerns are found | code diff + profiling data |
+| `browser-testing-with-devtools` | Peer | use Chrome DevTools performance panel for frontend-specific profiling | performance traces |
+| `shipping-and-launch` | Prerequisite / Gate | performance baselines should be established before production deploy | — |
+
+### Runtime Preamble
+Performance review. Invoked by code-review-and-quality when bottlenecks are suspected. Pairs with browser-testing-with-devtools for frontend profiling.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

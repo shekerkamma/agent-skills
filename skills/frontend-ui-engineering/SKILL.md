@@ -326,3 +326,49 @@ After building UI:
 - [ ] Loading, error, and empty states all handled
 - [ ] Follows the project's design system (spacing, colors, typography)
 - [ ] No accessibility warnings in dev tools or axe-core
+
+## Skill Relationships
+
+### Category
+Scaffolding & Templates
+
+### Lifecycle Position
+Build phase — specialist skill invoked when incremental-implementation involves UI work.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`planning-and-task-breakdown`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `planning-and-task-breakdown` | Sequential upstream | recommended — UI tasks should be broken down before implementation | tasks/todo.md |
+| `incremental-implementation` | Peer | use incremental-implementation for the build loop; use this skill for UI-specific quality standards | — |
+| `test-driven-development` | Sequential downstream | unit and component tests run after each UI slice | component implementation |
+| `browser-testing-with-devtools` | Sequential downstream | runtime DOM and visual verification after UI implementation | implemented components |
+| `source-driven-development` | Behavioral overlay | component and framework patterns must be verified against official docs | — |
+
+### Runtime Preamble
+Building production-quality UI. Feeds test-driven-development and browser-testing-with-devtools. Apply source-driven-development for framework pattern verification.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

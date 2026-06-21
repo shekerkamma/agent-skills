@@ -287,3 +287,47 @@ After setting up context, confirm:
 - [ ] Agent output follows the patterns shown in the rules file
 - [ ] Agent references actual project files and APIs (not hallucinated ones)
 - [ ] Context is refreshed when switching between major tasks
+
+## Skill Relationships
+
+### Category
+Infrastructure Ops
+
+### Lifecycle Position
+Step 5 of 13 — Build phase. Runs after planning-and-task-breakdown to load context before coding starts.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`planning-and-task-breakdown`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `planning-and-task-breakdown` | Sequential upstream | recommended — task plan clarifies what context to load | tasks/plan.md |
+| `incremental-implementation` | Behavioral overlay | always — improves output quality of any build-phase skill | — |
+| `source-driven-development` | Behavioral overlay | always — pair with source-driven-development for verified context | — |
+
+### Runtime Preamble
+Loading context for the session. Pair with source-driven-development for verified, well-grounded implementation. This improves output quality for any build-phase skill.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

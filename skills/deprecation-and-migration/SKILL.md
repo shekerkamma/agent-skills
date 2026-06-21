@@ -204,3 +204,48 @@ After completing a deprecation:
 - [ ] Old code, tests, documentation, and configuration are fully removed
 - [ ] No references to the deprecated system remain in the codebase
 - [ ] Deprecation notices are removed (they served their purpose)
+
+## Skill Relationships
+
+### Category
+CI/CD & Deployment
+
+### Lifecycle Position
+Ship phase — activated when removing old systems or migrating users between implementations.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`spec-driven-development`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `spec-driven-development` | Sequential upstream | deprecation decisions should be spec'd before any removal work begins | SPEC.md |
+| `shipping-and-launch` | Sequential downstream | migration ships through the same launch checklist as any other change | migration plan |
+| `documentation-and-adrs` | Peer | every deprecation decision should be captured as an ADR | docs/decisions/*.md |
+| `git-workflow-and-versioning` | Peer | use feature flags and atomic commits to keep migration reversible | — |
+
+### Runtime Preamble
+Managing deprecation and migration. Start with a spec (spec-driven-development). Every deprecation decision should be captured as an ADR (documentation-and-adrs). Ships through shipping-and-launch.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.

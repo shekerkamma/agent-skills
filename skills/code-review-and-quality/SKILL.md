@@ -345,3 +345,50 @@ After review is complete:
 - [ ] Tests pass
 - [ ] Build succeeds
 - [ ] The verification story is documented (what changed, how it was verified)
+
+## Skill Relationships
+
+### Category
+Code Quality & Review
+
+### Lifecycle Position
+Step 10 of 13 — Review phase. Runs after test-driven-development, before git-workflow-and-versioning.
+
+### Dependencies
+Skills that should run before this one (not hard blockers unless noted as Prerequisite / Gate):
+`test-driven-development`
+
+### Relationships
+| Skill | Pattern | Condition | Handoff Artifact |
+|---|---|---|---|
+| `test-driven-development` | Sequential upstream | always — tests must pass before review starts | passing test suite |
+| `git-workflow-and-versioning` | Sequential downstream | always — clean commits happen after a passing review | review sign-off |
+| `security-and-hardening` | Orchestrator | invoke for any change touching auth, input handling, or external integrations | security review findings |
+| `performance-optimization` | Orchestrator | invoke when the change touches query paths, loops, or I/O-heavy code | performance review findings |
+| `code-simplification` | Peer | run code-simplification before or during review to reduce noise in the diff | simplified diff |
+| `doubt-driven-development` | Peer | doubt-driven-development reviews in-flight decisions; code-review reviews completed code | — |
+
+### Runtime Preamble
+Five-axis review. Prerequisites: tests must pass (test-driven-development). Orchestrates security-and-hardening and performance-optimization for relevant changes. Passing review feeds git-workflow-and-versioning.
+
+## Host Compatibility
+
+### Target Hosts
+- Claude Code: yes — installed via `agent-skills@addy-agent-skills` plugin (user scope, globally available)
+- Codex/OpenAI: yes — installed via `agent-skills@addy-agent-skills` plugin from the `addy-agent-skills` marketplace
+
+### Tool Mapping
+| Claude Code | Codex |
+|---|---|
+| `Read` / `Grep` / `Glob` | shell reads / `rg` |
+| `Edit` / `MultiEdit` | `apply_patch` |
+| `Bash` | shell command |
+| `AskUserQuestion` | concise chat question |
+| `Task` / subagent | main-thread execution |
+
+### Source / Tool Order
+1. Read this SKILL.md and any referenced supporting files first.
+2. Use local repo artifacts and prior run files before any external lookup.
+3. Use GBrain or durable memory when available for recurring research topics.
+4. Use official documentation MCPs or preferred research plugins before generic web search.
+5. Use generic web search only as fallback or for official-source verification.
