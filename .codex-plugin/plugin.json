@@ -1,0 +1,40 @@
+{
+  "name": "agent-skills",
+  "version": "1.0.0",
+  "description": "Production-grade engineering skills for AI coding agents — covering the full software development lifecycle from spec to ship.",
+  "author": {
+    "name": "Addy Osmani",
+    "url": "https://github.com/addyosmani"
+  },
+  "homepage": "https://github.com/shekerkamma/agent-skills",
+  "repository": "https://github.com/shekerkamma/agent-skills",
+  "license": "MIT",
+  "keywords": [
+    "engineering",
+    "skills",
+    "spec",
+    "tdd",
+    "code-review",
+    "shipping",
+    "planning"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Agent Skills",
+    "shortDescription": "Production-grade engineering skills covering every phase of the SDLC",
+    "longDescription": "23 skills spanning the full development lifecycle: Define (spec, interview-me, idea-refine) → Plan → Build (TDD, incremental, context-engineering) → Verify → Review (code-review, security, performance) → Ship. Includes 7 slash commands and 3 agent personas.",
+    "developerName": "Addy Osmani",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use spec-driven-development to define what we're building.",
+      "Review this code using code-review-and-quality.",
+      "Run the test-driven-development workflow for this feature."
+    ],
+    "brandColor": "#1a1a2e"
+  }
+}

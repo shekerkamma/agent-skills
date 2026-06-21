@@ -1,0 +1,19 @@
+{
+  "name": "addy-agent-skills",
+  "interface": {
+    "displayName": "Agent Skills"
+  },
+  "plugins": [
+    {
+      "name": "agent-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/agent-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
